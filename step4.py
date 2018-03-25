@@ -62,6 +62,12 @@ for x in a:
 for x in b:
     print(x)
 
+for x in d.keys():
+    print(x)
+
+for x in d.values():
+    print(x)
+
 for x in d.items():
     print(x[0],'=>', x[1])
 
