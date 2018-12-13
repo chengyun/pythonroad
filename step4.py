@@ -2,7 +2,7 @@
 
 #list
 a = ['a',0,1,2,3]
-a.append(5)
+a.append(5) #没有push
 a.insert(5,4)
 a.pop(5)
 a.pop(0)
