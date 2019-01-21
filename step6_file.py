@@ -44,5 +44,7 @@ with open("tmp/中文.txt", 'rb') as file:
     data = file.read()
     charInfo = chardet.detect(data)  # {'confidence': 0.99, 'encoding': 'utf-8'}
     print(charInfo)
+    if not charInfo['encoding']:
+        charInfo['encoding'] = 'utf-8'
     content = data.decode(encoding=charInfo['encoding'])
     print(content)
