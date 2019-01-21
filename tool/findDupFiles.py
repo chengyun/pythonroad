@@ -18,15 +18,15 @@ def processDir(dirname):
     dupdict = {}
     emptylist = []
 
-    for dir_path, subpaths, files in os.walk(dirname):
+    for dirpath, subpaths, files in os.walk(dirname):
         for file in files:
-            f = os.path.join(dir_path, file)
+            f = os.path.join(dirpath, file)
             if os.path.getsize(f) <= 0:
                 emptylist.append(f)
                 continue
 
             k = md5(f)
-            if md5dict.get(k) is None:
+            if k not in md5dict:
                 md5dict[k] = f
             else:
                 dupdict[f] = k
@@ -38,13 +38,19 @@ def saveFile(filename, content):
         fo.write(content)
 
 
-md5dict, dupdict, emptylist = processDir(".")
+def process():
+    md5dict, dupdict, emptylist = processDir(".")
 
-for f in emptylist:
-    print("empty:", f)
+    for f in emptylist:
+        print("empty:", f)
 
-for f, k in dupdict.items():
-    print("dup:", k, f, "size:", os.path.getsize(f) // (1024 * 1024), "M", "src:", md5dict[k])
+    for f, k in dupdict.items():
+        print("dup:", k, f, "size:", os.path.getsize(f) // (1024 * 1024), "M", "src:", md5dict[k])
 
-saveFile("emptylist.txt", "\n".join(emptylist))
-saveFile("duplist.txt", "\n".join(dupdict.keys()))
+    saveFile("emptylist.txt", "\n".join(emptylist))
+    saveFile("duplist.txt", "\n".join(dupdict.keys()))
+
+
+if __name__ == "__main__":
+    process()
+    print("done")
